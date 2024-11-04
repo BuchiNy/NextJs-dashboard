@@ -4,7 +4,7 @@ import { fetchCustomers, fetchInvoiceById } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 
 interface PageProps{
-  params: {id: string};
+  params: Promise<{ id: string }>;
 }
 
 export default async function Page({params}: PageProps) {
