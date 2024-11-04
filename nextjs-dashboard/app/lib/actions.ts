@@ -43,13 +43,13 @@ export async function createInvoice(prevState: State, formData: FormData) {
         amount: formData.get('amount'),
         status: formData.get('status'),
     });
-    if (!validatedFields.success){
+    if (!validatedFields.success) {
         return {
             errors: validatedFields.error.flatten().fieldErrors,
             message: 'Missing fields. Faild to Create Invoice',
         };
     }
-    const {customerId, amount, status} = validatedFields.data
+    const { customerId, amount, status } = validatedFields.data
     const amountInCents = amount * 100;
     const date = new Date().toISOString().split('T')[0];
 
@@ -75,14 +75,14 @@ export async function updateInvoice(id: string, prevState: State, formData: Form
         status: formData.get('status'),
     });
 
-    if(!validatedFields.success){
-        return{
+    if (!validatedFields.success) {
+        return {
             errors: validatedFields.error.flatten().fieldErrors,
             message: 'Missing fields. Faild to Create Invoice',
         };
     }
 
-    const {customerId, amount, status} = validatedFields.data
+    const { customerId, amount, status } = validatedFields.data
     const amountInCents = amount * 100;
 
     try {
@@ -102,8 +102,6 @@ export async function updateInvoice(id: string, prevState: State, formData: Form
 }
 
 export async function deleteInvoice(id: string) {
-    throw new Error('failed to delete inovice');
-    
     try {
         await sql`DELETE FROM invoices WHERE id = ${id}`;
         revalidatePath('/dashboard/invoices');
@@ -114,12 +112,12 @@ export async function deleteInvoice(id: string) {
     }
 }
 
-export async function authenticate(prevState:string | undefined, formData: FormData) {
-    try{
+export async function authenticate(prevState: string | undefined, formData: FormData) {
+    try {
         await signIn('credentials', formData);
-    } catch (error){
-        if(error instanceof AuthError){
-            switch(error.type){
+    } catch (error) {
+        if (error instanceof AuthError) {
+            switch (error.type) {
                 case 'CredentialsSignin':
                     return 'Invaild credentials.';
                 default:
