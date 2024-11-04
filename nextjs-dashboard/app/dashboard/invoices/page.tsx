@@ -9,15 +9,14 @@ import { fetchInvoicesPages } from '@/app/lib/data';
 
 interface PageProps {
   searchParams?: {
-    query?: string;
-    page?: string;
+      query?: string;
+      page?: string;
   };
 }
 
-export default async function Page({ searchParams }: PageProps) {
-  const params = await searchParams;
-  const query = params?.query || '';
-  const currentPage = Number(params?.page) || 1;
+export default async function Page({ searchParams = {} }: PageProps) {
+  const query = searchParams.query || '';
+  const currentPage = Number(searchParams.page) || 1;
   const totalPages = await fetchInvoicesPages(query);
 
     return (
